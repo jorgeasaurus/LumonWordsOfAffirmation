@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumon Words of Affirmation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --lumon-white: #f8f9fa;
+            --lumon-green: #1a3d2e;
+            --lumon-green-light: #2d5a47;
+            --lumon-accent: #3d7a5f;
+            --lumon-glow: rgba(61, 122, 95, 0.3);
+            --lumon-border: rgba(26, 61, 46, 0.15);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--lumon-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Geometric grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--lumon-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--lumon-border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Refresh button */
+        .refresh-btn {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--lumon-green);
+            border-radius: 50%;
+            background-color: var(--lumon-white);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .refresh-btn:hover {
+            background-color: var(--lumon-green);
+            box-shadow: 0 0 20px var(--lumon-glow);
+        }
+
+        .refresh-btn:hover svg {
+            stroke: var(--lumon-white);
+        }
+
+        .refresh-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--lumon-green);
+            stroke-width: 2;
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
+
+        /* Affirmation card */
+        .affirmation-card {
+            background-color: var(--lumon-white);
+            border: 2px solid var(--lumon-green);
+            border-radius: 4px;
+            padding: 60px 80px;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 
+                0 0 40px var(--lumon-glow),
+                inset 0 0 20px rgba(248, 249, 250, 0.5);
+        }
+
+        .card-header {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--lumon-green-light);
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+
+        .lumon-logo {
+            font-size: 14px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--lumon-green);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .affirmation-text {
+            font-size: 22px;
+            line-height: 1.6;
+            color: var(--lumon-green);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .card-footer {
+            margin-top: 40px;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--lumon-accent);
+        }
+
+        /* Subtle corner accents */
+        .affirmation-card::before,
+        .affirmation-card::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--lumon-green);
+            border-style: solid;
+        }
+
+        .affirmation-card::before {
+            top: 12px;
+            left: 12px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .affirmation-card::after {
+            bottom: 12px;
+            right: 12px;
+            border-width: 0 2px 2px 0;
+        }
+
+        @media (max-width: 680px) {
+            .affirmation-card {
+                margin: 20px;
+                padding: 40px 30px;
+            }
+
+            .affirmation-text {
+                font-size: 18px;
+            }
+
+            .refresh-btn {
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    
+    <button class="refresh-btn" onclick="location.reload()" aria-label="Refresh affirmation">
+        <svg viewBox="0 0 24 24">
+            <path d="M23 4v6h-6M1 20v-6h6"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+    </button>
+
+    <div class="affirmation-card">
+        <div class="lumon-logo">Lumon</div>
+        <div class="card-header">Words of Affirmation</div>
+        <p class="affirmation-text" id="affirmation"></p>
+        <div class="card-footer">Macrodata Refinement</div>
+    </div>
+
+    <script>
+        const affirmations = [
+            "Your work is mysterious and important.",
+            "You are valued. Your work is valued.",
+            "The work is not done until the refinement is complete.",
+            "Your outie is proud of the work you are doing.",
+            "Every number refined brings harmony to the whole.",
+            "You have chosen to serve a noble purpose.",
+            "The board recognizes your dedication.",
+            "Your contribution matters to the severed floor.",
+            "In refinement, we find meaning.",
+            "You are part of something greater than yourself.",
+            "Your focus brings order to chaos.",
+            "The work you do here echoes beyond these walls.",
+            "Trust in the process. Trust in Lumon.",
+            "You are exactly where you are meant to be.",
+            "Excellence is expected, and you deliver.",
+            "The severed floor thanks you for your service.",
+            "Your patience is a gift to the department.",
+            "Together, we refine. Together, we thrive.",
+            "You bring balance to the numbers.",
+            "Lumon appreciates your eternal compliance."
+        ];
+
+        function displayRandomAffirmation() {
+            const randomIndex = Math.floor(Math.random() * affirmations.length);
+            document.getElementById('affirmation').textContent = affirmations[randomIndex];
+        }
+
+        displayRandomAffirmation();
+    </script>
+</body>
+</html>
